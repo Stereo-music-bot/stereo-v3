@@ -1,0 +1,101 @@
+permissions:
+  ADMINISTRATOR: "Administrateur"
+  CREATE_INSTANT_INVITE: "Créer une Invitation Instantanée"
+  KICK_MEMBERS: "Virer des Membres"
+  BAN_MEMBERS: "Bannir des Membres"
+  MANAGE_CHANNELS: "Gérer les Canaux"
+  MANAGE_GUILD: "Gérer le Serveur"
+  ADD_REACTIONS: "Ajouter des Réactions"
+  VIEW_AUDIT_LOG: "Voir les Logs du Serveur"
+  PRIORITY_SPEAKER: "Voix Prioritaire"
+  STREAM: "Stream"
+  VIEW_CHANNEL: "Voir Canal"
+  SEND_MESSAGES: "Envoyer des Messages"
+  SEND_TTS_MESSAGES: "Envoyer des TTS Messages"
+  MANAGE_MESSAGES: "Gérer les Messages"
+  EMBED_LINKS: "Liens d'Intégration"
+  ATTACH_FILES: "Joindre des Fichiers"
+  READ_MESSAGE_HISTORY: "Voir l'Historique des Messages"
+  MENTION_EVERYONE: "Mentionner Everyone"
+  USE_EXTERNAL_EMOJIS: "Utiliser des Emojis Externes"
+  VIEW_GUILD_INSIGHTS: "Voir l'Analayse du Serveur"
+  CONNECT: "Connecter"
+  SPEAK: "Parler"
+  MUTE_MEMBERS: "Rendre Muet des Membres"
+  DEAFEN_MEMBERS: "Mettre en Sourdine des Membres"
+  MOVE_MEMBERS: "Déplacer des Membres"
+  USE_VAD: "Utiliser la Détection de la Voix"
+  CHANGE_NICKNAME: "Changer le Pseudo"
+  MANAGE_NICKNAMES: "Gérer les Pseudos"
+  MANAGE_ROLES: "Gérer les Rôles"
+  MANAGE_WEBHOOKS: "Gérer les Webhooks"
+  MANAGE_EMOJIS: "Gérer les Emojis"
+message:
+  timeout: "> ⌚ | Hey, tu vas trop vite. Veuillez réessayer plus tard. `{remaining}`."
+  missingArgs: "> {redtick} | Il me manque 1 argument ou plus pour pouvoir continuer: `{required}`"
+  wrongChannel:
+    dms: "> {redtick} | Désolé, vous ne pouvez éxecuter cette commande que sur un serveur."
+    guild: ""
+  missingPerms:
+    sendMessages: "> {redtick} | Je ne peux pas taper dans {channel}. Si tu peux gérer ce canal, peux-tu me donner les permissions pour pouvoir parler? Pour que je puisse exécuter des commandes pour vous."
+    externalEmojis: "> ❌ | Il me manque `{permission}` permission, "
+    perms: "> {redtick} | Oops, il te manque 1 permission ou plus pour pouvoir executer cette commande: `{permissions}`."
+    client: "> {redtick} | Oops, il me manque 1 permission ou plus pour pouvoir executer cette commande: `{permissions}`."
+music:
+  announce:
+    embed:
+      title: "Now playing {title}"
+      description:
+        song: "> 🎵 | **Song**: {song}"
+        requester: "> 👤 | **Requested By**: {requester}"
+        duration: "> ⌚ | **Duration**: `{duration}`"
+  error:
+    stuck: "> {redtick} | The player is stuck on the song: **{title}**. I will skip this song now."
+    error: "> {redtick} | Oops, An error occured while playing **{title}**. I will skip this song now."
+  finished:
+    alone: "> 👤 | It looks like I am the only one in the voice channel, I will leave it now..."
+    disconnected: "> 👋 | Disconnected from the voice channel, I will clear the queue now. \n > ❗ | We do **not** recommend disconnecting it manually, use the `leave` command instead to avoid issues"
+    empty:
+      first: "> ❗ | The queue is empty now, I will leave after 5 minutes if the queue remains empty."
+      second: "> 🔇 | The queue remained empty, I will leave the voice channel now..."
+    exceedingTimeLimit: "> 👋 | Time is up, I am not still paused right now. To save bandwidth for discord and for myself I will leave this channel now."
+commands:
+  general:
+    ping:
+      loading: "> 🏓 | Pinging..."
+      message: "> 🏓 | Pong! Latence d'Edit: `{edit}` ms, Latence d'API: `{api}` ms. Uptime: `{uptime}`."
+  music:
+    lyrics:
+      description: "Shows the lyrics of the current playing song or by searching for your query"
+      usage: "[query]"
+      fails:
+        error: "> {warning} | Oh, this is something I was not able to prevent. I am reporting this to the stereo HQ, sorry for the inconvience. Try again later to see if its fixed!! ```{e}```"
+        noResult: "> {redtick} | I couldn't find a lyrics for `{query}`."
+        noArgs: "> {redtick} | There is no player in this server, please provide a search query so I can search for the lyrics."
+      embed:
+        title: "Lyrics for {name}"
+        footer: "Lyrics provided by ksoft.si"
+    play:
+      description: "The main command to play music, you can play spotify, youtube or soundcloud songs."
+      usage: "[type -> (--soundcloud or --sc) or nothing]|<song/playlist link/name>"
+      fails:
+        lockedChannel: "> {redtick} | I can not join your voice channel!"
+        foreignChannel: "> {redtick} | We are not in the same voice channel, please join `{channelName}`!"
+        error: "> {warning} | Oh no, there was a problem while loading your the song, error: `{error}`"
+        noResults: "> {redtick} | No search results where found for your search query."
+        loadError: "> {redtick} | A problem occured while loading your song, please try again later."
+        cancelled:
+          time: "> {redtick} | Time is up! `60s` have passed, this prompt is now closed!"
+          user: "> {greentick} | Okay, closing the prompt now!"
+      success:
+        song: "> 🎵 | Enqueuing the song **{title}**!"
+        playlist: "> 🎵 | Enqueuing the playlist **{name}** - `{length}` Song(s)."
+      searchResult:
+        title: "Search Result for '{song}' - say 'cancel' to cancel the prompt!"
+        footer: "This prompt will close in 60s, search type: {type}"
+    queue:
+      noPlayer: "> | There is no player or song playing in this server."
+      embed:
+        title: "Queue for {name}"
+        footer: "Page: {page} / {maxPages} - Use {command} to see a different page"
+      current: "Now playing | Requested by {requester}"

@@ -1,0 +1,236 @@
+permissions:
+  ADMINISTRATOR: "Administrator"
+  CREATE_INSTANT_INVITE: "Create Instant Invite"
+  KICK_MEMBERS: "Kick Members"
+  BAN_MEMBERS: "Ban Members"
+  MANAGE_CHANNELS: "Manage Channels"
+  MANAGE_GUILD: "Manage Server"
+  ADD_REACTIONS: "Add Reactions"
+  VIEW_AUDIT_LOG: "View Audit Log"
+  PRIORITY_SPEAKER: "Priority Speaker"
+  STREAM: "Stream"
+  VIEW_CHANNEL: "View Channel"
+  SEND_MESSAGES: "Send Messages"
+  SEND_TTS_MESSAGES: "Send TTS Messages"
+  MANAGE_MESSAGES: "Manage Messages"
+  EMBED_LINKS: "Embed Links"
+  ATTACH_FILES: "Attach Files"
+  READ_MESSAGE_HISTORY: "Read Message History"
+  MENTION_EVERYONE: "Mention Everyone"
+  USE_EXTERNAL_EMOJIS: "Use External Emojis"
+  VIEW_GUILD_INSIGHTS: "View Server Insights"
+  CONNECT: "Connect"
+  SPEAK: "Speak"
+  MUTE_MEMBERS: "Mute Members"
+  DEAFEN_MEMBERS: "Deafen Members"
+  MOVE_MEMBERS: "Move Members"
+  USE_VAD: "Use Voice Activity"
+  CHANGE_NICKNAME: "Change Nickname"
+  MANAGE_NICKNAMES: "Manage Nicknames"
+  MANAGE_ROLES: "Manage Roles"
+  MANAGE_WEBHOOKS: "Manage Webhooks"
+  MANAGE_EMOJIS: "Manage Emojis"
+message:
+  prefix: "> 🤖 | The prefix for this server are: `{prefix}` & {mention}. You can check the commands list by saying `{prefix}help [command name / alias]`."
+  timeout: "> ⌚ | Hey, you are going to fast. Please try again after `{remaining}`."
+  missingArgs: "> {redtick} | I am missing 1 or more arguments to continue: `{required}`"
+  wrongChannel:
+    dms: "> {redtick} | Sorry, you can only run this command in a server."
+  missingPerms:
+    sendMessages: "> {redtick} | I am not able to type in {channel}. If you are able to edit this channel, please give me permissions to chat so I can run the commands for you."
+    externalEmojis: "> ❌ | I am missing the `{permission}` permission, "
+    perms: "> {redtick} | Oops, you are missing 1 or more permissions to execute this command: `{permissions}`."
+    client: "> {redtick} | Oops, I am missing 1 or more permissions to execute this command: `{permissions}`."
+music:
+  announce:
+    embed:
+      title: "Now playing {title}"
+      description:
+        song: "> 🎵 | **Song**: {song}"
+        requester: "> 👤 | **Requested By**: {requester}"
+        duration: "> ⌚ | **Duration**: `{duration}`"
+  common:
+    unkownChannel: "> {redtick} | You are not in a voice channel, join one so I can join it too."
+    foreignChannel: "> {redtick} | We are not in the same voice channel, please join `{channelName}`!"
+    lockedChannel: "> {redtick} | I can not join your voice channel or I am not able to speak there!"
+    noQueue: "> {redtick} | There is no active player in this server."
+  error:
+    stuck: "> {redtick} | The player is stuck on the song: **{title}**. I will skip this song now."
+    error: "> {redtick} | Oops, An error occured while playing **{title}**. I will skip this song now."
+  finished:
+    alone: "> 👤 | It looks like I am the only one in the voice channel, I will leave it now..."
+    disconnected: "> 👋 | Disconnected from the voice channel, I will clear the queue now. \n > ❗ | We do **not** recommend disconnecting it manually, use the `leave` command instead to avoid issues"
+    empty:
+      first: "> ❗ | The queue is empty now, I will leave after 5 minutes if the queue remains empty."
+      second: "> 🔇 | The queue remained empty, I will leave the voice channel now..."
+    exceedingTimeLimit: "> 👋 | Time is up, I am not still paused right now. To save bandwidth for discord and for myself I will leave this channel now."
+commands:
+  general:
+    announce:
+      description: "Toggles the announcements off or on."
+      error: "> {warning} | Sorry, I have a few problems right now. Please try again later!"
+      success: "> 💬 | Successfully changed the announcement status to `{status}`!"
+    help:
+      description: "Smh, if you do not know what this does, why are you using it??"
+      usage: "[command name / alias]"
+      noResults: "> 🔎 | No command was found for your search query. {search}"
+      search: "Did you mean to search for: {query}?"
+      missing: "There is no {item} available for this command."
+      items:
+        desc: "description"
+        timeout: "timeout"
+      embed:
+        title: "{name}'s help menu"
+        size:
+          title: "Bot Commands — ( {size} )"
+          msg: "> ❓ | `<>` means this part of the command is needed | `[]` means that this part of the command is optional and not needed. \n > 🔗 | Useful Links: [Invite me]({inviteLink}) | [Support Server]({supportServer}) | [Website]({website}) | [Donate]({donationPage})"
+        description:
+          name: "> 🏷 | **Name**: `{name}`"
+          category: "> 📂 | **Category**: `{category}`"
+          aliases: "> 📄 | **Aliases**: {aliases}"
+          timeout: "> ⌚ | **Timeout**: `{timeout}`"
+          description: "> 📖 | **description**: {description}"
+          usage: "> 📋 | **usage**: {usage}"
+          owneronly: "> {emoji} | **Owner Only**: `{boolean}`"
+          rolePerms: "> 🔖 | **Role Permissions**: `{perms}`"
+          userPerms: "> 👮‍♂️ | **User Permissions**: {perms}"
+          clientPerms: "> ❗ | **Client Permissions**: {perms}"
+          true: "true"
+          false: "false"
+    info:
+      description: "Gives some intresting info/facts about the bot."
+      embed:
+        title: "{bot} | Bot information"
+        general:
+          title: "• General Information"
+          client: "> 🤖 | **Client**: {client}"
+          commands: "> {emoji} | **Commands**: {commands}"
+          users: "> 👥 | **Users**: {users}"
+          creation: "> 📆 | **Creation date**: `{date}`"
+        creators:
+          title: "• Creators of {bot}"
+          pl: "> {emoji} | **Project Leader**: {user}"
+          dev: "> {emoji} | **Main developer**: {user}"
+          cr: "> {emoji} | **Community Relations**: {user}"
+          me: "> {emoji} | **Management Executive**: {user}"
+          ca: "> {emoji} | **Community Architect**: {user}"
+        helpers: "• Translators of {bot}"
+        footer: "Made with Discord.js, TypeScript & Love | Lyrics api: ksoft.si"
+    language:
+      description: "With this command, you can change the language of the bot or check the supported languages."
+      usage: "[language id]"
+      embed: "Supported languages:"
+      fail:
+        error: "> {warning} | Oops, I did something wrong and I broke myself. Please try again later."
+        cancelled: "> {redtick} | Prompt is now cancelled."
+        unkownLang: "> 🔎 | `{language}` is not a valid language, please check the support language by running `{prefix}language` without any added arguments."
+        sameLang: "> {redtick} | The language you choose is the same as the one that is enabled right now, please select a different one!"
+      success: "> {greentick} | Successfully changed the language. In `10 seconds` you can change it again."
+      prompt:
+        title: "Confirmation needed to continue."
+        confirmText: "Are you sure you want to change the language to `{language}`? React with {greentick} to confirm, react with {redtick} to cancel this prompt!"
+        footer: "This command is triggered by {user}"
+    ping:
+      description: "Shows you the +/- connection latency & the +/- edit latency"
+      loading: "> 🏓 | Pinging..."
+      message: "> 🏓 | Pong! Edit latency: `{edit}` ms, API Latency: `{api}` ms. Uptime: `{uptime}`."
+    prefix:
+      description: "You can change the prefix with this command or check the prefixes of the bot. Prefix max length: 5 characters."
+      usage: "[new prefix]"
+      fail:
+        error: "> {warning} | Oops, I pushed the wrong button. Now the whole system is not working sorry! Please try again later."
+        incorrectPrefix: "> {redtick} | Sorry, you can only have a prefix up to `5` characters long."
+      success:
+        reset: "> {greentick} | Prefix successfully reset to `{prefix}`!"
+        changed: "> {greentick} | Successfully changed the prefix to `{prefix}`!"
+    stats:
+      description: "Stereo's technical stats are shown here, you can also find the server count & client uptime here."
+      embed:
+        title: "Stereo's Stats"
+        description: "This is all the technical information about stereo. Here you are also able to find the server count, bot uptime & the bot status. The information may not be up to date, it's the most recent information I was able to find in my cache."
+        general: 
+          title: "• General Information"
+          platform: "System Platform: {platform}"
+          uptime: "System Uptime: {uptime}"
+        cpu:
+          title: "• Cpu Information"
+          info: "Cores: {cores} | Speed: {speed}mhz"
+        memory:
+          title: "• Memory Usage"
+          total: "Total Memory: {total}"
+          used: "Used Memory: {used}"
+        bot:
+          title: "• Bot Information"
+          count: "Server Count: {count}"
+          uptime: "Client Uptime: {uptime}"
+          status: "Client Status: {status}"
+          version: "Client Version: v{version}"
+  music:
+    join:
+      description: "Joins your voice channel & creates a player."
+    leave:
+      description: "Leaves the voice channel and clears the queue."
+    lyrics:
+      description: "Shows the lyrics of the current playing song or by searching for your query"
+      usage: "[query]"
+      fails:
+        error: "> {warning} | Oh, this is something I was not able to prevent. I am reporting this to the stereo HQ, sorry for the inconvience. Try again later to see if its fixed!! ```{e}```"
+        noResult: "> {redtick} | I couldn't find a lyrics for `{query}`."
+        noArgs: "> {redtick} | There is no player in this server, please provide a search query so I can search for the lyrics."
+      embed:
+        title: "Lyrics for {name}"
+        footer: "Lyrics provided by ksoft.si"
+    np:
+      description: "Idk, some information about the song playing in the server, that's all."
+      error: "> {warning} | uhm, why always me?? Why am I the one with this problem now. Error, please go and irritate a different bot instead of me."
+      embed:
+        title: "Now playing: {title}"
+        song: "> 🎵 | **Song**: {link}"
+        requester: "> 👤 | **Requested by**: {requester}"
+        volume: "> 🔊 | **Volume**: `{volume}`%"
+        filter: "> 🎼 | **Filter**: `{filter}`"
+        bassboost: "> 🎚️ | **Bassboost Level**: `{bassboost}`"
+        progress: "> **↔️ | Play Progress**: `{progress}`"
+        footer: "({votes} / {required}) votes to skip the song!"
+      repeats:
+        queue: "> 🔁 | **Repeat**: `Queue`"
+        song: "> 🔂 | **Repeat**: `Song`"
+        none: "> ▶ | **Repeat**: `None`"
+    play:
+      description: "The main command to play music, you can play spotify, youtube or soundcloud songs."
+      usage: "[type -> (--soundcloud or --sc) or nothing]|<song/playlist link/name>"
+      fails:
+        error: "> {warning} | Oh no, there was a problem while loading your the song, error: `{error}`"
+        noResults: "> {redtick} | No search results where found for your search query."
+        loadError: "> {redtick} | A problem occured while loading your song, please try again later."
+        cancelled:
+          time: "> {redtick} | Time is up! `60s` have passed, this prompt is now closed!"
+          user: "> {greentick} | Okay, closing the prompt now!"
+      success:
+        song: "> 🎵 | Enqueuing the song **{title}**!"
+        playlist: "> 🎵 | Enqueuing the playlist **{name}** - `{length}` Song(s)."
+      searchResult:
+        title: "Search Result for '{song}' - say 'cancel' to cancel the prompt!"
+        footer: "This prompt will close in 60s, search type: {type}"
+    queue:
+      description: "Shows you the queued songs in the server"
+      usage: "[page number]"
+      noPlayer: "> {redtick} | There is no player or song playing in this server."
+      embed:
+        title: "Queue for {name}"
+        footer: "Page: {page} / {maxPages} - Use {command} to see a different page"
+      current: "Now playing | Requested by {requester}"
+  player_settings:
+    volume:
+      description: "Changes the volume of the player."
+      usage: "<volume (1-200)>"
+      error: "> {warning} | Sorry, I have difficulties changing the volume, please try again later."
+      unkownType: "> {redtick} | Sorry, that is not a valid number. I can only change the volume if it's between `1` & `200`."
+  queue_configuration:
+    forceskip:
+      description: "Force to skip a song, you will need a certain permission for this."
+    shuffle:
+      description: Shuffles the queue to have more fun listening to music"
+    skip:
+      description: "Skip a song or vote to skip a song."
+        
