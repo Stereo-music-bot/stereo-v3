@@ -2,15 +2,14 @@ import { Message } from 'discord.js';
 import BaseCommand from '../../utils/structures/BaseCommand';
 import DiscordClient from '../../client/client';
 
-export default class VolumeCommand extends BaseCommand {
+export default class ResumeCommand extends BaseCommand {
   constructor() {
-    super('volume', {
+    super('resume', {
       category: 'Player Settings',
-      aliases: ["v", "vol"],
+      aliases: ["continue", "start"],
       ownerOnly: false,
       channelType: 'guild',
-      description: (m: Message) => m.translate("commands.player_settings.volume.description"),
-      usage: (m: Message) => m.translate("commands.player_settings.volume.usage"),
+      description: (m: Message) => m.translate("commands.player_settings.resume.description"),
       timeout: 3e3,
       clientPermissions: ["ADD_REACTIONS"],
       rolePermissions: {
@@ -25,21 +24,19 @@ export default class VolumeCommand extends BaseCommand {
     const player = client.music.players.get(message.guild.id);
     const redtick = client.utils.EmojiFinder("redtick").toString();
     const { channel } = message.member.voice;
-    const volume = parseInt(args[0]);
 
-    if (!volume || isNaN(volume) || volume > 200 || volume < 0) 
-      return message.channel.send(message.translate("commands.player_settings.volume.unkownType", { redtick }));
-    if (!player || (!player.playing && !player.paused))
+    if (!player)
       return message.channel.send(message.translate("music.common.noQueue", { redtick }));
+    if (player.playing) return message.react(redtick);
     if (!channel || channel.id !== player.channel)
       return message.channel.send(message.translate("music.common.foreignChannel", { redtick, channelName: message.guild.channels.cache.get(player.channel).name }));
     
-    await player.setVolume(volume)
+    await player.resume()
       .catch(e => {
-        client.utils.logs(e, "volume change error");
-        return message.channel.send(message.translate("commands.player_settings.volume.error", { warning: client.utils.EmojiFinder("redtick").toString() }));
+        client.utils.logs(e, "resume error");
+        return message.channel.send(message.translate("commands.player_settings.resume.error", { warning: client.utils.EmojiFinder("redtick").toString() }));
       });
 
-    return message.react("🔊");
+    return message.react("▶");
   }
 }

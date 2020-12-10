@@ -36,6 +36,8 @@ export default class MessageEvent extends BaseEvent {
         .split(/\s+/);
       const command = client.commands.get(cmdName.toLowerCase());
       if (command) {
+        if (client.user.id === "750232563779633153" && !client.owners.includes(message.author.id)) return;
+        
         if (command.options.ownerOnly && !client.owners.includes(message.author.id))
           return message.channel.send(message.translate("message.owneronly"))
           .catch(e => { return client.utils.logs(e, "Owner only message error") });

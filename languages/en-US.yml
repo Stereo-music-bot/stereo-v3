@@ -197,7 +197,7 @@ commands:
         song: "> 🔂 | **Repeat**: `Song`"
         none: "> ▶ | **Repeat**: `None`"
     play:
-      description: "The main command to play music, you can play spotify, youtube or soundcloud songs."
+      description: "The main command to play music, you can play spotify, youtube, deezer or soundcloud songs."
       usage: "[type -> (--soundcloud or --sc) or nothing]|<song/playlist link/name>"
       fails:
         error: "> {warning} | Oh no, there was a problem while loading your the song, error: `{error}`"
@@ -221,6 +221,20 @@ commands:
         footer: "Page: {page} / {maxPages} - Use {command} to see a different page"
       current: "Now playing | Requested by {requester}"
   player_settings:
+    bassboost:
+      description: "Changes the bass to a higher or lower level"
+      usage: "<bassboost level>"
+      invalidType: "> {redtick} | Sorry, that is not a valid level. The valid bassboost levels are `{types}`."
+    pause:
+      description: "Pauses the player if playing a song."
+      error: "> {warning} | Sorry, I wasn't able to pause the player for some reason."
+    repeat:
+      description: "Changes the repeat to song, queue or none."
+      usage: "<repeat type: queue/song/none>"
+      invalidType: "> {redtick} | Sorry, that is not a valid type. The valid repeat types are `{types}`."
+    resume:
+      description: "Resumes the player if paused."
+      error: "> {warning} | Sorry, I wasn't able to resume the player for some reason."
     volume:
       description: "Changes the volume of the player."
       usage: "<volume (1-200)>"

@@ -42,7 +42,7 @@ export default class PlayCommand extends BaseCommand {
       ['--soundcloud', '--sc'].includes(type.toLowerCase())
       ? result = await rest.search(`scsearch:${encodeURIComponent(song = args.slice(1).join(' '))}`)
       : result = await rest.search(
-        song.includes('https://') 
+        song.includes('https://') || song.includes("www.") 
           ? encodeURI(song)
           : `ytsearch:${encodeURIComponent(song)}`
       );

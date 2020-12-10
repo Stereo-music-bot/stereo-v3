@@ -2,15 +2,28 @@ import { Message } from 'discord.js';
 import BaseCommand from '../../utils/structures/BaseCommand';
 import DiscordClient from '../../client/client';
 
-export default class VolumeCommand extends BaseCommand {
+const gains = {
+  hard: 0.12,
+  medium: 0.07,
+  low: 0.04,
+  none: 0,
+};
+const levels = [
+  "hard", 
+  "medium", 
+  "low", 
+  "none",
+];
+
+export default class BassboostCommand extends BaseCommand {
   constructor() {
-    super('volume', {
+    super('bassboost', {
       category: 'Player Settings',
-      aliases: ["v", "vol"],
+      aliases: ["bb", "bass"],
       ownerOnly: false,
       channelType: 'guild',
-      description: (m: Message) => m.translate("commands.player_settings.volume.description"),
-      usage: (m: Message) => m.translate("commands.player_settings.volume.usage"),
+      description: (m: Message) => m.translate("commands.player_settings.bassboost.description"),
+      usage: (m: Message) => m.translate("commands.player_settings.bassboost.usage"),
       timeout: 3e3,
       clientPermissions: ["ADD_REACTIONS"],
       rolePermissions: {
@@ -22,24 +35,25 @@ export default class VolumeCommand extends BaseCommand {
   }
 
   async run(client: DiscordClient, message: Message, args: Array<string>) {
-    const player = client.music.players.get(message.guild.id);
     const redtick = client.utils.EmojiFinder("redtick").toString();
+    const player = client.music.players.get(message.guild.id);
     const { channel } = message.member.voice;
-    const volume = parseInt(args[0]);
+    const level = (args[0] || '').toLowerCase();
 
-    if (!volume || isNaN(volume) || volume > 200 || volume < 0) 
-      return message.channel.send(message.translate("commands.player_settings.volume.unkownType", { redtick }));
+    if (!level || !levels.includes(level)) 
+      return message.channel.send(message.translate("commands.player_settings.bassboost.invalidType", { types: levels.join('`, `'), redtick }));
     if (!player || (!player.playing && !player.paused))
       return message.channel.send(message.translate("music.common.noQueue", { redtick }));
     if (!channel || channel.id !== player.channel)
       return message.channel.send(message.translate("music.common.foreignChannel", { redtick, channelName: message.guild.channels.cache.get(player.channel).name }));
     
-    await player.setVolume(volume)
-      .catch(e => {
-        client.utils.logs(e, "volume change error");
-        return message.channel.send(message.translate("commands.player_settings.volume.error", { warning: client.utils.EmojiFinder("redtick").toString() }));
-      });
+    await player.setEqualizer(
+      Array(6)
+        .fill(null)
+        .map((_, i) => ({ band: i++, gain: gains[level.toLowerCase()] }))
+    );
 
-    return message.react("🔊");
+    player.bass = level as "hard" | "medium" | "low" | "none";
+    return message.react("🎚️");
   }
 }

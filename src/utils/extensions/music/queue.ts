@@ -1,8 +1,7 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { Message, MessageEmbed,VoiceChannel } from 'discord.js';
 import { EventEmitter } from 'events';
 import { Player } from 'lavaclient';
 import { decode } from '@lavalink/encoding';
-import rest from "./rest";
 
 interface QueueObject {
   track: string;
@@ -28,6 +27,8 @@ export default class Queue extends EventEmitter {
 
   public timeout: NodeJS.Timeout = null;
   public pauseTimeout: NodeJS.Timeout = null;
+
+  public move: boolean = false;
 
   public constructor(public player: Player) {
     super();
@@ -90,7 +91,11 @@ export default class Queue extends EventEmitter {
       .catch(e => this.message.client.utils.logs(e, "Announce Player `error` Error"));
       return this.skip(this.player);
   })
-  .on("closed", (wsce) => this.emit("finished", "disconnect"));
+  .on("closed", (wsce) => {
+    if (!this.message) return this.emit("finished", "disconnect");
+    if (this.move) return;
+    return this.emit("finished", "disconnect");
+  })
 
   this.on('finished', async (reason: string) => {
       if ((this.repeat.queue && reason !== 'Alone') || this.repeat.always) {
@@ -102,6 +107,7 @@ export default class Queue extends EventEmitter {
           return await this.start(this.message, this.announce);
       };
 
+      if (!this.message) return this.clear();
       switch (reason) {
           case 'Alone':
               if (this.repeat.always) return;
@@ -143,6 +149,8 @@ export default class Queue extends EventEmitter {
     this.previous = [];
     this.repeat = { song: false, queue: false, always: false };
 
+    clearTimeout(this.timeout)
+    clearTimeout(this.pauseTimeout)
     return await this.player.manager.destroy(
       this.message ? this.message.guild.id : this.player.guild
     );
@@ -168,6 +176,10 @@ export default class Queue extends EventEmitter {
     player.radio = undefined;
     this.votes = { votes: 0, users: [] };
     if (!this.current || !this.current.track) return this.emit('finished', 'empty');
+
+    clearTimeout(this.pauseTimeout);
+    clearTimeout(this.timeout);
+
     return await player.play(this.current.track);
   };
 

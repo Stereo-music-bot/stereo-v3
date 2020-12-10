@@ -28,8 +28,8 @@ const client = new DiscordClient({});
 
   client.music = new Manager([{
     id: "main",
-    host: "localhost",
-    port: 7621,
+    host: process.env.HOST,
+    port: parseInt(process.env.PORT),
     password: process.env.PASSWORD,
   }], {
     shards: client.shard ? client.shard.count : 1,

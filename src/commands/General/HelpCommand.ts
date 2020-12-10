@@ -50,7 +50,7 @@ export default class HelpCommand extends BaseCommand {
       };
       const options = cmd.options;
 
-      const usage = options.usage ? options.usage(message) : "";
+      const usage = options.usage ? options.usage(message).split(/|/g).join(" ") : "";
       const desc = options.description ? options.description(message).split(/\s+/) : message.translate("commands.general.help.missing", { item: message.translate("commands.general.help.items.desc") }).split(/\s+/);
       const description = (desc[desc.length - 1].includes(".") || desc[desc.length - 1].includes("?") || desc[desc.length - 1].includes("!"))
       ? desc.join(" ") : desc.join(" ") + ".";
@@ -84,10 +84,12 @@ export default class HelpCommand extends BaseCommand {
       if (!client.owners.includes(message.author.id)) categories = removeDuplicates(client.cs.filter(cmd => !cmd.options.ownerOnly).map(cmd => cmd.options.category));
       else categories = removeDuplicates(client.cs.map(cmd => cmd.options.category));
 
-      for (const category of categories) {
-        embed.addField(`${category} — ( ${client.cs.filter(cmd => cmd.options.category === category).size} )`, client.cs.filter(cmd => cmd.options.category === category).map(cmd => `\`${cmd.name}\``).join(' '));
-      }
       embed.setDescription(message.translate("message.prefix", { prefix, mention: client.user.toString() }));
+      
+      for (const category of categories) embed.addField(
+        `${category} — ( ${client.cs.filter(cmd => cmd.options.category === category).size} )`, 
+        client.cs.filter(cmd => cmd.options.category === category).map(cmd => `\`${cmd.name}\``).join(' ')
+      );
 
       return message.channel.send(embed);
     }

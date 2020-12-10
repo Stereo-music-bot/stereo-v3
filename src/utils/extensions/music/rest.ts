@@ -1,6 +1,8 @@
-import types from '@kyflx-dev/lavalink-types';
+import Deezer from "deezer-web-api";
 import fetch from 'node-fetch';
-import { SpotifyParser, LavalinkTrack } from 'spotilink';
+import { SpotifyParser, LavalinkTrack, LavalinkSearchResult } from 'spotilink';
+
+const deezer = new Deezer();
 
 const spotilink = new SpotifyParser({ 
     host: process.env.HOST, 
@@ -78,6 +80,51 @@ export default class rest {
 
           if (["NO_MATCHES", "LOAD_FAILED"].includes(loadType)) return { loadType: "NO_MATCHES" };
           else return { loadType: "PLAYLIST_LOADED", tracks: songs, playlistInfo: { name: playlist.name } };
+        } else if (/(?:https?:\/\/|)?(www\.)?deezer\.com\/([a-z\d-_]+)\/track\/([0-9]+)/gi.test(track)) {
+          const arr = track.split(/(?:https?:\/\/|)?(www\.)?deezer\.com\/([a-z\d-_]+)\/track\/([0-9]+)/gi);
+          const result = arr.filter(a => !isNaN(parseInt(a)))[0];
+          if (!result) return { loadType: "NO_MATCHES" };
+
+          let loadType: string = "TRACK_LOADED";
+          let song: any;
+          try {
+            const data = await deezer.musics.getTrack(result);
+            song = await this.search(`ytsearch:${encodeURIComponent(`${data.title} - ${data.artist.name}`)}`);
+          } catch (e) {
+            console.log(e);
+            song = undefined;
+            loadType = "LOAD_FAILED";
+          }
+
+          console.log(song);
+          if (!song) return { loadType: "NO_MATCHES" };
+
+          if (["NO_MATCHES", "LOAD_FAILED"].includes(loadType)) return { loadType: "NO_MATCHES" };
+          else return { loadType, tracks: [song.tracks[0]] };
+        } else if (/(?:https?:\/\/|)?(www\.)?deezer\.com\/([a-z\d-_]+)\/playlist\/([0-9]+)/gi.test(track)) {
+          const arr = track.split(/(?:https?:\/\/|)?(www\.)?deezer\.com\/([a-z\d-_]+)\/playlist\/([0-9]+)/gi);
+          const result = arr.filter(a => !isNaN(parseInt(a)))[0];
+          if (!result) return { loadType: "NO_MATCHES" };
+
+          let loadType: string = "PLAYLIST_LOADED";
+          let songs: any[];
+          let playlist: any;
+          try {
+            playlist = await deezer.musics.getPlaylist(result);
+            songs = await Promise.all(playlist.tracks.data.map(async (item: any) => 
+              (await this.search(`ytsearch:${encodeURIComponent(`${item.title} - ${item.artist.name}`)}`)).tracks[0]
+            ));
+            songs = songs.filter(s => s !== undefined);
+          } catch (e) {
+            console.log(e);
+            songs = undefined;
+            loadType = "LOAD_FAILED";
+          }
+
+          if (!songs) return { loadType: "NO_MATCHES" };
+
+          if (["NO_MATCHES", "LOAD_FAILED"].includes(loadType)) return { loadType: "NO_MATCHES" };
+          else return { loadType, tracks: songs, playlistInfo: { name: playlist.title } };
         }
       
         try {
