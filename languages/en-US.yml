@@ -253,6 +253,9 @@ commands:
   queue_configuration:
     forceskip:
       description: "Force to skip a song, you will need a certain permission for this."
+    remove:
+      description: "Removes a song from the queue"
+      usage: "<song id>"
     shuffle:
       description: Shuffles the queue to have more fun listening to music"
     skip:
