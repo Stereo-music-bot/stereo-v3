@@ -225,7 +225,7 @@ commands:
     radio:
       description: "Plays a radio station via discord."
       usage: "<radio station name>"
-      success: "> 🎵 | Now playing the station: `{station}`, you may hear a resfresh every 30m. This is so Stereo is able to play the station instead of stopping after a certain amount of time!"
+      success: "> 🎵 | Now playing the station: `{station}`, you may hear a resfresh every 30m. This is so Stereo keeps playing the station instead of breaking after a certain amount of minutes!"
       playerExists: "> {redtick} | Sorry, you can only do that when there is no player."
   player_settings:
     bassboost:

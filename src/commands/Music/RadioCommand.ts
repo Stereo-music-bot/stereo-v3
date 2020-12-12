@@ -3,6 +3,7 @@ import BaseCommand from '../../utils/structures/BaseCommand';
 import DiscordClient from '../../client/client';
 import rest from "../../utils/extensions/music/rest";
 import fetch from "node-fetch";
+import { clearInterval } from 'timers';
 
 export default class RadioCommand extends BaseCommand {
   constructor() {
@@ -53,10 +54,12 @@ export default class RadioCommand extends BaseCommand {
     if (!player.connected) player.connect(channel.id, { selfDeaf: true });
     if (!player.playing && !player.paused) await player.play(tracks[0].track);
 
-    setInterval(async () => {
+    const interval = setInterval(async () => {
       data = await (await fetch(`https://de1.api.radio-browser.info/json/stations/byname/${encodeURIComponent(station)}`)).json();
       await player.play(tracks[0].track);
     }, 18e5);
+
+    setInterval(() => !client.music.players.get(message.guild.id) ? clearInterval(interval) : "", 5e3);
 
     return message.channel.send(message.translate("commands.music.radio.success", { station }));
   }
