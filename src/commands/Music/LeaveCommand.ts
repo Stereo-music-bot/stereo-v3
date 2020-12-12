@@ -29,7 +29,7 @@ export default class LeaveCommand extends BaseCommand {
     if (!channel || player.channel !== channel.id) 
       return message.channel.send(message.translate("music.common.foreignChannel", { redtick, channelName: message.guild.channels.cache.get(player.channel).name }));
     
-    player.queue ? player.queue.clear() : "";
+    player.queue ? player.queue.clear() : player.destroy(true);
     return message.react("👋");
   }
 }

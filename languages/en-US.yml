@@ -222,6 +222,11 @@ commands:
         title: "Queue for {name}"
         footer: "Page: {page} / {maxPages} - Use {command} to see a different page"
       current: "Now playing | Requested by {requester}"
+    radio:
+      description: "Plays a radio station via discord."
+      usage: "<radio station name>"
+      success: "> 🎵 | Now playing the station: `{station}`, you may hear a resfresh every 30m. This is so Stereo is able to play the station instead of stopping after a certain amount of time!"
+      playerExists: "> {redtick} | Sorry, you can only do that when there is no player."
   player_settings:
     bassboost:
       description: "Changes the bass to a higher or lower level"
