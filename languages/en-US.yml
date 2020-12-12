@@ -54,7 +54,7 @@ music:
     foreignChannel: "> {redtick} | We are not in the same voice channel, please join `{channelName}`!"
     lockedChannel: "> {redtick} | I can not join your voice channel or I am not able to speak there!"
     noQueue: "> {redtick} | There is no active player in this server."
-  error:
+  errors:
     stuck: "> {redtick} | The player is stuck on the song: **{title}**. I will skip this song now."
     error: "> {redtick} | Oops, An error occured while playing **{title}**. I will skip this song now."
   finished:
@@ -165,6 +165,8 @@ commands:
           uptime: "Client Uptime: {uptime}"
           status: "Client Status: {status}"
           version: "Client Version: v{version}"
+        status:
+          title: "• Status Message"
   music:
     join:
       description: "Joins your voice channel & creates a player."
@@ -235,6 +237,14 @@ commands:
     resume:
       description: "Resumes the player if paused."
       error: "> {warning} | Sorry, I wasn't able to resume the player for some reason."
+    rewind:
+      description: "Move backwards in a song that is playing in the server."
+      usage: "<position (number)>"
+      incorrectValue: "> {redtick} | Sorry, that is an incorrect value. Make sure you only pass in a number and **not** a song position like: `1:00`."
+    seek:
+      description: "Move forward in a song that is playing in the server."
+      usage: "<position (number)>"
+      incorrectValue: "> {redtick} | Sorry, that is an incorrect value. Make sure you only pass in a number and **not** a song position like: `1:00`."
     volume:
       description: "Changes the volume of the player."
       usage: "<volume (1-200)>"

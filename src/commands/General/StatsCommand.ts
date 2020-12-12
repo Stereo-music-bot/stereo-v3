@@ -51,13 +51,16 @@ export default class StatsCommand extends BaseCommand {
       ].join("\n")}\`\`\``
     )
     .addField(message.translate("commands.general.stats.embed.bot.title"), 
-    `\`\`\`${[
-      message.translate("commands.general.stats.embed.bot.status", { status: client.status || "✅" }),
-      message.translate("commands.general.stats.embed.bot.count", { count: client.guilds.cache.size }),
-      message.translate("commands.general.stats.embed.bot.version", { version }),
-      message.translate("commands.general.stats.embed.bot.uptime", {  uptime: ms(client.uptime, { long: true }) }),
-    ].join("\n")}\`\`\``
-  )
+      `\`\`\`${[
+        message.translate("commands.general.stats.embed.bot.status", { status: client.status || "✅" }),
+        message.translate("commands.general.stats.embed.bot.count", { count: client.guilds.cache.size }),
+        message.translate("commands.general.stats.embed.bot.version", { version }),
+        message.translate("commands.general.stats.embed.bot.uptime", {  uptime: ms(client.uptime, { long: true }) }),
+      ].join("\n")}\`\`\``
+    )
+    .addField(message.translate("commands.general.stats.embed.status.title"), 
+      `\`\`\`${client.statusMsg || "—"}\`\`\``
+    );
 
     return message.channel.send(embed);
   }

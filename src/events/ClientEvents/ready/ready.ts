@@ -10,9 +10,9 @@ export default class ReadyEvent extends BaseEvent {
   async run (client: DiscordClient) {
     client.music.init(client.user.id);
     console.log(`${client.user.tag} has logged in.`);
-    await client.user.setActivity('with v3 👀', { type: "PLAYING" });
-    await client.user.setStatus('idle');
 
+    this.devStatus(client);
+    
     client.guilds.cache.forEach(guild => this.loadConfig(client, guild));
   }
 
@@ -28,5 +28,15 @@ export default class ReadyEvent extends BaseEvent {
      
     const doc = await data.toObject();
     return client.guildConfig.set(guild.id, doc);
+  }
+
+  async devStatus(client: DiscordClient) {
+    await client.user.setActivity('with v3 👀', { type: "PLAYING" });
+    await client.user.setStatus('idle');
+  }
+
+  async status(client: DiscordClient) {
+    await client.user.setActivity('with v3 👀', { type: "PLAYING" });
+    await client.user.setStatus('idle');
   }
 }

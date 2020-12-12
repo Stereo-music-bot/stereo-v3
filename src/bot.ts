@@ -15,7 +15,8 @@ import './utils/extensions/discord/stereoMessage';
 const client = new DiscordClient({});
 
 (async () => {
-  client.status = "";
+  client.status = "✅";
+  client.statusMsg = "—";
 
   client.guildConfig = new Map();
   client.languages = new languageHandler(client, './languages');
@@ -24,7 +25,7 @@ const client = new DiscordClient({});
   client.utils = new utils(client);
   client.webhook = new WebhookClient('762318210959540234', 'qX0BfjL9GVopsV6zq1OXXEkeEvGC_3u9tHLUYTgCkWMZlsZE3azVJYNVsx1K5-8Vd12h');
 
-  client.owners = ["304986851310043136", "715289819630141487"];
+  client.owners = ["304986851310043136"];
 
   client.music = new Manager([{
     id: "main",
@@ -43,6 +44,7 @@ const client = new DiscordClient({});
   await registerEvents(client, '../events/ClientEvents');
   await registerWSEvents(client, '../events/WSEvents');
   await registerMusicEvents(client, client.music, '../events/musicEvents');
+
   client.login(process.env.DISCORD_BOT_TOKEN);
 
   mongoose.connect(process.env.DB_URL, {
@@ -93,6 +95,7 @@ declare module "discord.js" {
     owners: string[];
     music: Manager;
     status: string,
+    statusMsg: string,
   }
 
   interface Message {

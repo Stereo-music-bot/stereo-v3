@@ -50,7 +50,7 @@ export default class HelpCommand extends BaseCommand {
       };
       const options = cmd.options;
 
-      const usage = options.usage ? options.usage(message).split(/|/g).join(" ") : "";
+      const usage = options.usage ? options.usage(message).split(/\|/g).join(" ") : "";
       const desc = options.description ? options.description(message).split(/\s+/) : message.translate("commands.general.help.missing", { item: message.translate("commands.general.help.items.desc") }).split(/\s+/);
       const description = (desc[desc.length - 1].includes(".") || desc[desc.length - 1].includes("?") || desc[desc.length - 1].includes("!"))
       ? desc.join(" ") : desc.join(" ") + ".";
@@ -77,7 +77,7 @@ export default class HelpCommand extends BaseCommand {
         message.translate("commands.general.help.embed.description.userPerms", { perms: options.userPermissions ? client.utils.formatPerms(options.userPermissions) : '`—`' }),
         message.translate("commands.general.help.embed.description.clientPerms", { perms: options.clientPermissions ? client.utils.formatPerms(options.clientPermissions) : '`—`' }),
       ]);
-
+      
       return message.channel.send(embed);
     } else {
       let categories: string[];
