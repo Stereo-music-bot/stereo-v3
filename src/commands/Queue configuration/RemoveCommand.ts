@@ -31,9 +31,8 @@ export default class RemoveCommand extends BaseCommand {
       return message.channel.send(message.translate("music.common.noQueue", { redtick }));
     if (!channel || channel.id !== player.channel)
       return message.channel.send(message.translate("music.common.foreignChannel", { redtick, channelName: message.guild.channels.cache.get(player.channel).name }));
+    if (isNaN(id) || id > player.queue.next.length || id < player.queue.next.length) return message.react(redtick);
     
-    if (isNaN(id) || id > player.queue.next.length || id < player.queue.next.length)
-      return message.react(redtick);
     await player.queue.remove(id);
     return message.react("🗑");
   }

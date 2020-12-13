@@ -2,14 +2,15 @@ import { Message } from 'discord.js';
 import BaseCommand from '../../utils/structures/BaseCommand';
 import DiscordClient from '../../client/client';
 
-export default class SkipCommand extends BaseCommand {
+export default class SkiptoCommand extends BaseCommand {
   constructor() {
-    super('skip', {
+    super('skipto', {
       category: 'Queue Configuration',
-      aliases: ["s", "next"],
+      aliases: [],
       ownerOnly: false,
       channelType: 'guild',
-      description: (m: Message) => m.translate("commands.queue_configuration.skip.description"),
+      description: (m: Message) => m.translate("commands.queue_configuration.skipto.description"),
+      usage: (m: Message) => m.translate("commands.queue_configuration.skipto.usage"),
       timeout: 3e3,
       clientPermissions: ["ADD_REACTIONS"],
       rolePermissions: {
@@ -21,30 +22,20 @@ export default class SkipCommand extends BaseCommand {
   }
 
   async run(client: DiscordClient, message: Message, args: Array<string>) {
-    const redtick = client.utils.EmojiFinder('redtick').toString();
+    const redtick = client.utils.EmojiFinder("redtick").toString();
     const player = client.music.players.get(message.guild.id);
     const { channel } = message.member.voice;
+    const id = parseInt(args[0]);
 
     if (!player || !player.queue || !player.queue.current) 
       return message.channel.send(message.translate("music.common.noQueue", { redtick }));
+
     if (!channel || channel.id !== player.channel)
       return message.channel.send(message.translate("music.common.foreignChannel", { redtick, channelName: message.guild.channels.cache.get(player.channel).name }));
+    
+    if (isNaN(id) || id < player.queue.next.length || id > player.queue.next.length) return message.react(redtick);
 
-    const vote = player.queue.votes;
-    const voteCount: number = channel.members.filter(m => !m.user.bot).size - 1;
-
-    if (vote.users.includes(message.author.id)) return message.react(redtick);
-  
-    if (vote.votes + 1 >= voteCount) {
-      await player.queue.skip(player);
-      if (player.queue.current) return message.react("⏭");
-    } else if (voteCount <= 0) {
-      await player.queue.skip(player);
-      if (player.queue.current) return message.react("⏭");
-    } else {
-      vote.votes += 1;
-      vote.users.push(message.author.id);
-      return message.react("👍");
-    }
+    await player.queue.skipto(id - 1);
+    return message.react("⏭");
   }
 }
