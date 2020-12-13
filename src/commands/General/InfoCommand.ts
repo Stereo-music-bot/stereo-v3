@@ -42,12 +42,6 @@ export default class InfoCommand extends BaseCommand {
             client.users.cache.get("304986851310043136").toString() :
             await client.users.fetch("304986851310043136", true, true) 
         }),
-        message.translate("commands.general.info.embed.creators.pl", { 
-          emoji: client.utils.EmojiFinder("Rolling").toString(),
-          user: client.users.cache.get("715289819630141487") 
-            ? client.users.cache.get("715289819630141487").toString() 
-            : await client.users.fetch("715289819630141487", true, true) 
-        }),
         message.translate("commands.general.info.embed.creators.me", { 
           emoji: client.utils.EmojiFinder("e_luzmog").toString(),
           user: client.users.cache.get("765295694583693372")
