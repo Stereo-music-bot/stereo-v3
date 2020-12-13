@@ -269,7 +269,7 @@ commands:
       description: Shuffles the queue to have more fun listening to music"
     skip:
       description: "Skip a song or vote to skip a song."
-    skip:
+    skipto:
       description: "Skip to a song in the queue."
       usage: "<position of song in the queue>"
         
