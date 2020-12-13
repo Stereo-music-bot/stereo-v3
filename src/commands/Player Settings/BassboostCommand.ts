@@ -3,12 +3,14 @@ import BaseCommand from '../../utils/structures/BaseCommand';
 import DiscordClient from '../../client/client';
 
 const gains = {
-  hard: 0.12,
-  medium: 0.07,
-  low: 0.04,
+  extreme: 0.20,
+  hard: 0.14,
+  medium: 0.09,
+  low: 0.06,
   none: 0,
 };
 const levels = [
+  "extreme",
   "hard", 
   "medium", 
   "low", 
@@ -47,11 +49,12 @@ export default class BassboostCommand extends BaseCommand {
     if (!channel || channel.id !== player.channel)
       return message.channel.send(message.translate("music.common.foreignChannel", { redtick, channelName: message.guild.channels.cache.get(player.channel).name }));
     
-    await player.setEqualizer(
-      Array(6)
+    await player.send("filters", {
+      equalizer:
+        Array(6)
         .fill(null)
         .map((_, i) => ({ band: i++, gain: gains[level.toLowerCase()] }))
-    );
+    });
 
     player.bass = level as "hard" | "medium" | "low" | "none";
     return message.react("🎚️");
