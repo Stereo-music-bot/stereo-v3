@@ -81,7 +81,7 @@ declare module "lavaclient" {
     _connected: boolean;
     bass: 'hard' | 'medium' | 'low' | 'none';
     repeating: 'queue' | 'song' | 'always' | 'none';
-    filter: 'nightcore' | 'default';
+    filter: 'nightcore' | "slowed" | 'default';
     radio?: { playing: boolean, name: string };
   }
 }
