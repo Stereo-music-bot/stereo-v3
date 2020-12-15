@@ -86,7 +86,11 @@ export default class HelpCommand extends BaseCommand {
 
       embed.setDescription(message.translate("message.prefix", { prefix, mention: client.user.toString() }));
       
-      for (const category of categories) embed.addField(
+      if (!client.owners.includes(message.author.id)) for (const category of categories) embed.addField(
+        `${category} — ( ${client.cs.filter(cmd => cmd.options.category === category && !cmd.options.ownerOnly).size} )`, 
+        client.cs.filter(cmd => cmd.options.category === category).filter(c => !c.options.ownerOnly).map(cmd => `\`${cmd.name}\``).join(' ')
+      );
+      else if (client.owners.includes(message.author.id)) for (const category of categories) embed.addField(
         `${category} — ( ${client.cs.filter(cmd => cmd.options.category === category).size} )`, 
         client.cs.filter(cmd => cmd.options.category === category).map(cmd => `\`${cmd.name}\``).join(' ')
       );
