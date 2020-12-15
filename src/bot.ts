@@ -25,7 +25,7 @@ const client = new DiscordClient({});
   client.utils = new utils(client);
   client.webhook = new WebhookClient('762318210959540234', 'qX0BfjL9GVopsV6zq1OXXEkeEvGC_3u9tHLUYTgCkWMZlsZE3azVJYNVsx1K5-8Vd12h');
 
-  client.owners = ["304986851310043136"];
+  client.owners = ["304986851310043136", "765295694583693372", "552788119334813716", "548157913760530442"];
 
   client.music = new Manager([{
     id: "main",
