@@ -6,7 +6,7 @@ permissions:
   MANAGE_CHANNELS: "Gérer les Canaux"
   MANAGE_GUILD: "Gérer le Serveur"
   ADD_REACTIONS: "Ajouter des Réactions"
-  VIEW_AUDIT_LOG: "Voir les Logs du Serveur"
+  VIEW_AUDIT_LOG: "Voir les Logs du Serveur"server
   PRIORITY_SPEAKER: "Voix Prioritaire"
   STREAM: "Stream"
   VIEW_CHANNEL: "Voir Canal"
@@ -44,58 +44,231 @@ message:
 music:
   announce:
     embed:
-      title: "Now playing {title}"
+      title: "En cours d'écoute de {title}"
       description:
         song: "> 🎵 | **Song**: {song}"
-        requester: "> 👤 | **Requested By**: {requester}"
-        duration: "> ⌚ | **Duration**: `{duration}`"
-  error:
-    stuck: "> {redtick} | The player is stuck on the song: **{title}**. I will skip this song now."
-    error: "> {redtick} | Oops, An error occured while playing **{title}**. I will skip this song now."
+        requester: "> 👤 | **Demandé par**: {requester}"
+        duration: "> ⌚ | **Durée**: `{duration}`"
+  common:
+    unkownChannel: "> {redtick} | Tu n'es pas dans un salon vocal, rejoins-en un pour que je le rejoigne également."
+    foreignChannel: "> {redtick} | On n'est pas dans le même salon vocal, veuillez rejoindre `{channelName}`!"
+    lockedChannel: "> {redtick} | Je ne peux pas rejoindre le salon vocal ou je ne suis pas authorisé à parler!"
+    noQueue: "> {redtick} | Il n'y a aucune personne active dans ce serveur."
+  errors:
+    stuck: "> {redtick} | La personne est bloquée sur cette chanson: **{title}**. Je vais passer au morceau suivant."
+    error: "> {redtick} | Oops, une erreur s'est produite pendant l'écoute de **{title}**. Je vais passer au morceau suivant."
   finished:
-    alone: "> 👤 | It looks like I am the only one in the voice channel, I will leave it now..."
-    disconnected: "> 👋 | Disconnected from the voice channel, I will clear the queue now. \n > ❗ | We do **not** recommend disconnecting it manually, use the `leave` command instead to avoid issues"
+    alone: "> 👤 | On dirait que je suis seul dans ce salon vocal, je vais désormais le quitter..."
+    disconnected: "> 👋 | Déconnecté du salon vocal, je vais désormais effacer la queue. \n > ❗ | Nous **ne vous recommandons pas de me déconnecter manuellement, utilisez la commande `leave` à la place pour éviter les preoblèmes."
     empty:
-      first: "> ❗ | The queue is empty now, I will leave after 5 minutes if the queue remains empty."
-      second: "> 🔇 | The queue remained empty, I will leave the voice channel now..."
-    exceedingTimeLimit: "> 👋 | Time is up, I am not still paused right now. To save bandwidth for discord and for myself I will leave this channel now."
+      first: "> ❗ | La queue est vide, je vais désormais partir dans 5 minutes si elle reste toujours vide."
+      second: "> 🔇 | La queue est restée vide, je vais désormais quitter le salon vocal..."
+    exceedingTimeLimit: "> 👋 | Le temps est écoulé, je ne suis pas encore en pause pour le moment. Pour sauver de la bande passante pour Discord and pour moi-même, je vais quitter ce salon."
 commands:
   general:
+    announce:
+      description: "Basculer les annonces off ou on."
+      error: "> {warning} | Désolé, je rencontre quelques problèmes actuellement. Veuillez réessayer plus tard!"
+      success: "> 💬 | Le statut des announces a été changé à `{status}`!"
+    help:
+      description: "Oula, si tu ne sais pas ce que ça fait, pourquoi alors l'utiliser?"
+      usage: "[nom de commande / alias]"
+      noResults: "> 🔎 | Pas de commande trouvé pour votre requête. {search}"
+      search: "Voulais pas tu rechercher pour: {query}?"
+      missing: "Il n'y a pas {item} disponible pour cette commande."
+      items:
+        desc: "description"
+        timeout: "temps mort"
+      embed:
+        title: "Menu d'aide de {name}"
+        size:
+          title: "Commandes du bot — ( {size} )"
+          msg: "> ❓ | `<>` sognifie que cette partie de la commande est nécessaire. | `[]` signifie que cette partie de la commande est optionnel et n'est pas nécessaire. \n > 🔗 | Liens utiles: [Invite moi]({inviteLink}) | [Serveur de Support]({supportServer}) | [Site Web]({website}) | [Faire un Don]({donationPage})"
+        description:
+          name: "> 🏷 | **Nom**: `{name}`"
+          category: "> 📂 | **Categorie**: `{category}`"
+          aliases: "> 📄 | **Alias**: {aliases}"
+          timeout: "> ⌚ | **Temps Mort**: `{timeout}`"
+          description: "> 📖 | **Description**: {description}"
+          usage: "> 📋 | **Usage**: {usage}"
+          owneronly: "> {emoji} | **Propriétaire Seulement**: `{boolean}`"
+          rolePerms: "> 🔖 | **Permissions de Rôle**: `{perms}`"
+          userPerms: "> 👮‍♂️ | **Permissions d'Utilisateur**: {perms}"
+          clientPerms: "> ❗ | **Permissions Client**: {perms}"
+          true: "vrai"
+          false: "faux"
+    info:
+      description: "Donne moi des informations/faits à propos de ce bot."
+      embed:
+        title: "{bot} | Information du bot."
+        general:
+          title: "• Information Générale"
+          client: "> 🤖 | **Client**: {client}"
+          commands: "> {emoji} | **Commandes**: {commands}"
+          users: "> 👥 | **Utilisateurs**: {users}"
+          creation: "> 📆 | **Date de création**: `{date}`"
+        creators:
+          title: "• Createurs du {bot}"
+          dev: "> {emoji} | {user}"
+          cr: "> {emoji} | {user}"
+          me: "> {emoji} | {user}"
+          ca: "> {emoji} | {user}"
+        helpers: "• Traducteurs du {bot}"
+        footer: "Fait avec Discord.js, TypeScript & Love | Paroles api: ksoft.si"
+    language:
+      description: "Avec cette commande, tu peux changer la langue de ce bot ou verifier les langues prises en charge."
+      usage: "[language id]"
+      embed: "Langues supportés:"
+      fail:
+        error: "> {warning} | Oops, j'ai fait quelques chpse de mauvais and je me suis cassé. Veuillez réessayer plus tard."
+        cancelled: "> {redtick} | L'invite est maintenant annulé."
+        unkownLang: "> 🔎 | `{language}` n'est pas une langue valide, veuillez vérifier les langues prises en charge en utilisant la command `{prefix}language` sans ajouter aucun argument."
+        sameLang: "> {redtick} | La langue que vous avez choisi est la même que celui qui est celui qui activé en ce moment, vuillez en choisir un autre!"
+      success: "> {greentick} | Successfully changed the language. In `10 seconds` you can change it again."
+      prompt:
+        title: "Confirmation nécessaire pour continuer."
+        confirmText: "Es-tu sûr de changer de langue à `{language}`? Reagis avec {greentick} pour confirmer, réagis avec {redtick} pour annuler cette invite!"
+        footer: "Cette commande est déclenchée par {user}"
     ping:
+      description: "Affiche la latence de connexion +/- et la latence d'édition +/-"
       loading: "> 🏓 | Pinging..."
-      message: "> 🏓 | Pong! Latence d'Edit: `{edit}` ms, Latence d'API: `{api}` ms. Uptime: `{uptime}`."
+      message: "> 🏓 | Pong! Latence d'édition: `{edit}` ms, Latence d'API: `{api}` ms. Uptime: `{uptime}`."
+    prefix:
+      description: "Tu peux changer le préfixe avec cette commande ou vérifier les préfixes du bot. Longueur maximale du préfixe: 5 caractères."
+      usage: "[new prefix]"
+      fail:
+        error: "> {warning} | Oups, j'ai appuyé sur le mauvais bouton. Maintenant, tout le système est en panne, désolé! Veuillez réessayer plus tard."
+        incorrectPrefix: "> {redtick} | Désolé, vous tu ne peux avoir qu'un préfixe de 5 caractères maximum."
+      success:
+        reset: "> {greentick} | Le préfixe a été réinitialisé avec succès à `{prefix}`!"
+        changed: "> {greentick} | Le préfixe a bien été remplacé par `{prefix}`!"
+    stats:
+      description: "Les statistiques techniques de Stereo sont affichées ici, tu peux également trouver le nombre de serveurs auquel Stereo y est et la disponibilité du client ici."
+      embed:
+        title: "Statistiques de Stereo"
+        description: "Ce sont toutes les informations techniques sur Stereo. Ici, tu peux également trouver le nombre de serveurs auqel Stereo y est, la disponibilité du bot et l'état du bot. Les informations peuvent ne pas être à jour, ce sont les informations les plus récentes que j'ai pu trouver dans ma cache."
+        general: 
+          title: "• Information Générale"
+          platform: "Plateforme du Système: {platform}"
+          uptime: "Uptime du Système: {uptime}"
+        cpu:
+          title: "• Information du CPU"
+          info: "Coeurs du CPU: {cores} | Vitesse: {speed}mhz"
+        memory:
+          title: "• Usage de la Mémoire"
+          total: "Mémoire totale: {total}"
+          used: "Mémoire utilisé: {used}"
+        bot:
+          title: "• Information du Bot"
+          count: "Nombre de serveurs: {count}"
+          uptime: "Uptime du Client: {uptime}"
+          status: "Status du Client: {status}"
+          version: "Version du Client: v{version}"
+        status:
+          title: "• Statut du Message"
   music:
+    join:
+      description: "Rejoint votre canal vocal et crée un joueur."
+    leave:
+      description: "Quitte le canal vocal et efface la file d'attente."
     lyrics:
-      description: "Shows the lyrics of the current playing song or by searching for your query"
+      description: "Montre les paroles de la chanson/musique ou en recherchant votre requête."
       usage: "[query]"
       fails:
-        error: "> {warning} | Oh, this is something I was not able to prevent. I am reporting this to the stereo HQ, sorry for the inconvience. Try again later to see if its fixed!! ```{e}```"
-        noResult: "> {redtick} | I couldn't find a lyrics for `{query}`."
-        noArgs: "> {redtick} | There is no player in this server, please provide a search query so I can search for the lyrics."
+        error: "> {warning} | Oh, c'est quelque chose que je n'ai pas pu empêcher. Je signale cela au Quartier Général de Stereo, désolé pour le désagrément. Réessayez plus tard pour voir si ça a été corrigé ! ```{e}```"
+        noResult: "> {redtick} | Je n'ai pas pu trouver les paroles pour `{query}`."
+        noArgs: "> {redtick} | Il n'y a pas de lecteur sur ce serveur, veuillez fournir une requête de recherche afin que je puisse rechercher les paroles."
       embed:
-        title: "Lyrics for {name}"
-        footer: "Lyrics provided by ksoft.si"
+        title: "Paroles pour {name}"
+        footer: "Paroles fournis par ksoft.si"
+    np:
+      description: "Je sais pas, quelques informations sur la chanson/musique en cours de lecture sur le serveur, c'est tout."
+      error: "> {warning} | Euh, pourquoi toujours moi? Pourquoi suis-je celui qui a ce problème maintenant... Erreur, allez-vous en et irritez un autre bot que moi."
+      embed:
+        title: "En cours de lecture: {title}"
+        song: "> 🎵 | **Musique/Chanson**: {link}"
+        requester: "> 👤 | **Demandé par**: {requester}"
+        volume: "> 🔊 | **Volume**: `{volume}`%"
+        filter: "> 🎼 | **Filtre**: `{filter}`"
+        bassboost: "> 🎚️ | **Niveau du renforcement des basses**: `{bassboost}`"
+        progress: "> **↔️ | Progression de la lecture**: `{progress}`"
+        footer: "({votes} / {required}) vote pour passer la musique/chanson!"
+      repeats:
+        queue: "> 🔁 | **Répéter**: `Queue`"
+        song: "> 🔂 | **Répéter**: `Song`"
+        none: "> ▶ | **Répéter**: `None`"
     play:
-      description: "The main command to play music, you can play spotify, youtube or soundcloud songs."
+      description: "La commande principale pour jouer de la musique. Tu peux jouer de la musique de Spotify, YouTube, Deezer ou Sounddloud."
       usage: "[type -> (--soundcloud or --sc) or nothing]|<song/playlist link/name>"
       fails:
-        lockedChannel: "> {redtick} | I can not join your voice channel!"
-        foreignChannel: "> {redtick} | We are not in the same voice channel, please join `{channelName}`!"
-        error: "> {warning} | Oh no, there was a problem while loading your the song, error: `{error}`"
-        noResults: "> {redtick} | No search results where found for your search query."
-        loadError: "> {redtick} | A problem occured while loading your song, please try again later."
+        error: "> {warning} | Oh non, il y a eu un problème pendant le chargement de ta musique/chanson, erreur: `{error}`"
+        noResults: "> {redtick} | Aucun résultat de recherche ont été trouvé pour votre requête de recherche."
+        loadError: "> {redtick} | Un problème s'est produit pendant le chargement de votre musique/chanson, veuillez réessayer plus tard."
         cancelled:
-          time: "> {redtick} | Time is up! `60s` have passed, this prompt is now closed!"
-          user: "> {greentick} | Okay, closing the prompt now!"
+          time: "> {redtick} | Le temps est écoulé! `60s` ont été écoulé, cette invite sera désormais férmé!"
+          user: "> {greentick} | D'accord, fermeture de l'invite maintenant!"
       success:
-        song: "> 🎵 | Enqueuing the song **{title}**!"
-        playlist: "> 🎵 | Enqueuing the playlist **{name}** - `{length}` Song(s)."
+        song: "> 🎵 | Mettre en file d'attente la musique/chanson **{title}**!"
+        playlist: "> 🎵 | Mettre en file d'attente la playlist **{name}** - `{length}` Song(s)."
       searchResult:
-        title: "Search Result for '{song}' - say 'cancel' to cancel the prompt!"
-        footer: "This prompt will close in 60s, search type: {type}"
+        title: "Résultat de recherche pour '{song}' - dis 'cancel' pour annuler cette invite!"
+        footer: "Cette invite fermera dans 60s, type de recherche: {type}"
     queue:
-      noPlayer: "> | There is no player or song playing in this server."
+      description: "Vous montre les musiques/chansons en file d'attente sur le serveur."
+      usage: "[page number]"
+      noPlayer: "> {redtick} | Il n'y a pas de lecteur ou de musique/chanson en cours de lecture sur ce serveur."
       embed:
-        title: "Queue for {name}"
-        footer: "Page: {page} / {maxPages} - Use {command} to see a different page"
-      current: "Now playing | Requested by {requester}"
+        title: "Queue pour {name}"
+        footer: "Page: {page} / {maxPages} - Utliser {command} pour voir une différente page."
+      current: "En cours de lecture | Demandé par {requester}"
+    radio:
+      description: "Joue une station de radio via Discord."
+      usage: "<radio station name>"
+      success: "> 🎵 | Station en cours de lecture: `{station}`, vous pouvez entendre un rafraîchissement tous les 30m. C'est pour que Stereo continuer à jouer la station au lieu de casser après une certaine quantité de minutes!"
+      playerExists: "> {redtick} | Désolé, tu peux selement faire ça si il n'y a pas de lecteur."
+  player_settings:
+    bassboost:
+      description: "Change les basses à un niveau supérieur ou inférieur."
+      usage: "<bassboost level>"
+      invalidType: "> {redtick} | Désolé, ce n'est pas un niveau valid. Les niveau de bassess sont `{types}`."
+    nigthcore:
+      description: "Ajoute ou enlève le filtre nightcore."
+    pause:
+      description: "Pause le lecteur s'il y a une musique/chanson en cours de lecture."
+      error: "> {warning} | Désolé, je n'ai pas pu mettre le lecteur sur pause pour des raisons."
+    repeat:
+      description: "Change la répétition en chanson, file d'attente ou aucune."
+      usage: "<repeat type: queue/song/none>"
+      invalidType: "> {redtick} | Désolé, ce n'est pas un type valide. Les types de répétition valides sont `{types}`."
+    resume:
+      description: "Reprends le lecteur si ça a été mis en pause."
+      error: "> {warning} | Désolé, je n'ai pas pu reprendre le lecteur pour des raisons."
+    rewind:
+      description: "Reculez dans un morceau en cours de lecture sur le serveur."
+      usage: "<position (number)>"
+      incorrectValue: "> {redtick} | Désolé, c'est une valeur inconnue. Assurez-vous de seulement mettre un chiffre et **pas** une position de musique/chanson comme `1:00`."
+    slowed:
+      description: "Ajoute ou enlève les fitres ralentis."
+    seek:
+      description: "Avance dans la musique/chanson qui est en cours de lecture dans le serveur."
+      usage: "<position (number)>"
+      incorrectValue: "> {redtick} | Désolé, c'est une valeur inconnue. Assurez-vous de seulement mettre un chiffre et **pas** une position de musique/chanson comme `1:00`."
+    volume:
+      description: "Change le volume du lecteur."
+      usage: "<volume (1-200)>"
+      error: "> {warning} | Désolé, j'éprouve des difficultés à changer le volume, veuillez réessayer plus tard."
+      unkownType: "> {redtick} | Désolé, ce n'est pas un normbre valide. Je peux seulement changer le volume si c'est entre `1` & `200`."
+  queue_configuration:
+    forceskip:
+      description: "Forcer à sauter cette musique/chanson, tu auras besoin d'une certaine permission pour pouvoir l'utiliser."
+    remove:
+      description: "Enlève une musique/chanson de la queue."
+      usage: "<song id>"
+    shuffle:
+      description: Mélange la file d'attente pour avoir plus de plaisir à écouter de la musique."
+    skip:
+      description: "Saute une musique/chanson ou vote pour sauter cette musique/chanson."
+    skipto:
+      description: "Passer à une chanson dans la file d'attente."
+      usage: "<position of song in the queue>"
+        
