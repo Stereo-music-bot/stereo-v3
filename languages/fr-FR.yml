@@ -18,7 +18,7 @@ permissions:
   READ_MESSAGE_HISTORY: "Voir l'Historique des Messages"
   MENTION_EVERYONE: "Mentionner Everyone"
   USE_EXTERNAL_EMOJIS: "Utiliser des Emojis Externes"
-  VIEW_GUILD_INSIGHTS: "Voir l'Analayse du Serveur"
+  VIEW_GUILD_INSIGHTS: "Voir l'Analyse du Serveur"
   CONNECT: "Connecter"
   SPEAK: "Parler"
   MUTE_MEMBERS: "Rendre Muet des Membres"
@@ -83,10 +83,10 @@ commands:
         title: "Menu d'aide de {name}"
         size:
           title: "Commandes du bot — ( {size} )"
-          msg: "> ❓ | `<>` sognifie que cette partie de la commande est nécessaire. | `[]` signifie que cette partie de la commande est optionnel et n'est pas nécessaire. \n > 🔗 | Liens utiles: [Invite moi]({inviteLink}) | [Serveur de Support]({supportServer}) | [Site Web]({website}) | [Faire un Don]({donationPage})"
+          msg: "> ❓ | `<>` signifie que cette partie de la commande est nécessaire. | `[]` signifie que cette partie de la commande est optionnel et n'est pas nécessaire. \n > 🔗 | Liens utiles: [Invite moi]({inviteLink}) | [Serveur de Support]({supportServer}) | [Site Web]({website}) | [Faire un Don]({donationPage})"
         description:
           name: "> 🏷 | **Nom**: `{name}`"
-          category: "> 📂 | **Categorie**: `{category}`"
+          category: "> 📂 | **Catégorie**: `{category}`"
           aliases: "> 📄 | **Alias**: {aliases}"
           timeout: "> ⌚ | **Temps Mort**: `{timeout}`"
           description: "> 📖 | **Description**: {description}"
@@ -108,7 +108,7 @@ commands:
           users: "> 👥 | **Utilisateurs**: {users}"
           creation: "> 📆 | **Date de création**: `{date}`"
         creators:
-          title: "• Createurs du {bot}"
+          title: "• Créateurs du {bot}"
           dev: "> {emoji} | {user}"
           cr: "> {emoji} | {user}"
           me: "> {emoji} | {user}"
@@ -265,7 +265,7 @@ commands:
       description: "Enlève une musique/chanson de la queue."
       usage: "<song id>"
     shuffle:
-      description: Mélange la file d'attente pour avoir plus de plaisir à écouter de la musique."
+      description: "Mélange la file d'attente pour avoir plus de plaisir à écouter de la musique."
     skip:
       description: "Saute une musique/chanson ou vote pour sauter cette musique/chanson."
     skipto:
