@@ -6,7 +6,7 @@ permissions:
   MANAGE_CHANNELS: "Gérer les Canaux"
   MANAGE_GUILD: "Gérer le Serveur"
   ADD_REACTIONS: "Ajouter des Réactions"
-  VIEW_AUDIT_LOG: "Voir les Logs du Serveur"server
+  VIEW_AUDIT_LOG: "Voir les Logs du Serveur"
   PRIORITY_SPEAKER: "Voix Prioritaire"
   STREAM: "Stream"
   VIEW_CHANNEL: "Voir Canal"
@@ -271,4 +271,3 @@ commands:
     skipto:
       description: "Passer à une chanson dans la file d'attente."
       usage: "<position of song in the queue>"
-        
