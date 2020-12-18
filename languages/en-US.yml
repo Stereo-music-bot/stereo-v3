@@ -265,7 +265,7 @@ commands:
       description: "Removes a song from the queue"
       usage: "<song id>"
     shuffle:
-      description: Shuffles the queue to have more fun listening to music"
+      description: "Shuffles the queue to have more fun listening to music"
     skip:
       description: "Skip a song or vote to skip a song."
     skipto:
